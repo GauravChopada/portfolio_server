@@ -2,11 +2,11 @@
 
 const express = require("express"); // web routing and resources application framework
 const bodyParser = require("body-parser"); // for parsing HTTP requests and responses
-const exphbs = require("express-handlebars"); // web template middleware engine
+const engine = require("express-handlebars"); // web template middleware engine
 const path = require("path"); // core JS module for handling file paths
 const nodemailer = require("nodemailer"); // module for handling emails
-const dotenv = require("dotenv"); // set up config for ".env" file
-dotenv.config();
+// const dotenv = require("dotenv"); // set up config for ".env" file
+// dotenv.config();
 
 const app = express(); // declare the application as an "express" web app
 
@@ -14,8 +14,9 @@ const app = express(); // declare the application as an "express" web app
 app.use("/public", express.static(path.join(__dirname, "public")));
 
 // Declare view engine setup
-app.engine("handlebars", exphbs());
+app.engine("handlebars", engine());
 app.set("view engine", "handlebars");
+app.set("views", "./views");
 
 // Body Parser Middleware
 app.use(bodyParser.urlencoded({ extended: false }));
