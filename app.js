@@ -2,7 +2,7 @@
 
 const express = require("express"); // web routing and resources application framework
 const bodyParser = require("body-parser"); // for parsing HTTP requests and responses
-const engine = require("express-handlebars"); // web template middleware engine
+const exphbs = require("express-handlebars"); // web template middleware engine
 const path = require("path"); // core JS module for handling file paths
 const nodemailer = require("nodemailer"); // module for handling emails
 // const dotenv = require("dotenv"); // set up config for ".env" file
@@ -14,7 +14,7 @@ const app = express(); // declare the application as an "express" web app
 app.use("/public", express.static(path.join(__dirname, "public")));
 
 // Declare view engine setup
-app.engine("handlebars", engine());
+app.engine("handlebars", exphbs.engine());
 app.set("view engine", "handlebars");
 app.set("views", "./views");
 
