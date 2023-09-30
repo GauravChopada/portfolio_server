@@ -10,8 +10,7 @@
 	"keywords": [
 		"nodemailer",
 		"gmail",
-		"express",
-		"express handlebars"
+		"express"
 	],
 	"author": "Gaurav Chopda",
 	"license": "ISC",
