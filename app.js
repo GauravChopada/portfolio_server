@@ -5,8 +5,8 @@ const bodyParser = require("body-parser"); // for parsing HTTP requests and resp
 const exphbs = require("express-handlebars"); // web template middleware engine
 const path = require("path"); // core JS module for handling file paths
 const nodemailer = require("nodemailer"); // module for handling emails
-// const dotenv = require("dotenv"); // set up config for ".env" file
-// dotenv.config();
+const dotenv = require("dotenv"); // set up config for ".env" file
+dotenv.config();
 
 const app = express(); // declare the application as an "express" web app
 
@@ -27,35 +27,30 @@ app.get("/", (req, res) => {
 	res.render("index", { layout: false }); // looks for the "/views/index.handlebars" file
 });
 
-// Handle the POST request sent to the "/sendEmail" route
 app.post("/send", (req, res) => {
 	// CREATE YOUR OWN EMBEDDED HTML TEMPLATE STRING WITH name, school, email, phone, and message CONTACT DETAILS
 	const EMAIL_HTML_BODY = `
     <p><b>Name:</b> ${req.body.name}</p>
     <p><b>Email:</b> ${req.body.email}</p>
+    <p><b>Via:</b> GROOT PORTFOLIO</p>
     <p><b>Message:</b> ${req.body.message}</p>`; // create the body of the email with embedded HTML
-
-	const AUTH_ENV = {
-		user: process.env.NM_EMAIL_ADDR,
-		pass: process.env.NM_EMAIL_PASS,
-	};
 
 	// Create reusable transporter object defined with the NodeMailer module
 	const transporter = nodemailer.createTransport({
-		host: "smtp.ethereal.email",
-		port: 587,
-		auth: AUTH_ENV,
+		service: "gmail",
+		auth: {
+			user: process.env.NM_EMAIL_ADDR,
+			pass: process.env.NM_EMAIL_PASS
+		}
 	});
 
 	// Setup email data object
 	let mailOptions = {
-		from: `"${req.body.name}" <${AUTH_ENV.user}>`, // sender address
-		to: `${req.body.email}`, // comma separated list of receivers
-		// cc: null, // carbon copy option address option
-		// bcc: null, // blind carbon copy address option
-		subject: "Using Nodemailer", // Subject line
-		html: EMAIL_HTML_BODY, // html body
-		// attachments: [], // list/array of objects ; can rename the file if desired
+		from: `"${req.body.name}" <${process.env.NM_EMAIL_ADDR}>`,
+		to: 'gauravrchopada65@gmail.com',
+		subject: `${req.body.subject}`,
+		html: EMAIL_HTML_BODY,
+
 	};
 
 	// Send mail with defined transport object
@@ -79,7 +74,7 @@ app.post("/send", (req, res) => {
 });
 
 // START SEVER LISTENING ON PORT
-let port = process.env.PORT || 5000;
+let port = process.env.PORT || 4000;
 
 // HERE
 app.listen(port, () => console.log(`Listening on port ${port}`));
