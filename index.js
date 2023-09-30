@@ -24,7 +24,7 @@ app.use(bodyParser.json());
 
 // Explicitly declare routes ("express-handlebars" default route, from the root is "/views/layouts/")
 app.get("/", (req, res) => {
-	res.render("index", { layout: false }); // looks for the "/views/index.handlebars" file
+	res.send('I am GRoot ☘️'); // looks for the "/views/index.handlebars" file
 });
 
 app.post("/send", (req, res) => {
