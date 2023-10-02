@@ -5,12 +5,20 @@ const bodyParser = require("body-parser"); // for parsing HTTP requests and resp
 const path = require("path"); // core JS module for handling file paths
 const nodemailer = require("nodemailer"); // module for handling emails
 const dotenv = require("dotenv"); // set up config for ".env" file
+const cors=require("cors");
 dotenv.config();
 
 const app = express(); // declare the application as an "express" web app
 
 // Declare Static public resources directory
 app.use("/public", express.static(path.join(__dirname, "public")));
+
+const corsOptions ={
+	origin:'*', 
+	credentials:true,
+	optionSuccessStatus:200,
+}
+app.use(cors(corsOptions))
 
 // Body Parser Middleware
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -22,6 +30,7 @@ app.get("/", (req, res) => {
 });
 
 app.post("/send", (req, res) => {
+	console.log(req.body)
 	// CREATE YOUR OWN EMBEDDED HTML TEMPLATE STRING WITH name, school, email, phone, and message CONTACT DETAILS
 	const EMAIL_HTML_BODY = `
     <p><b>Name:</b> ${req.body.name}</p>
