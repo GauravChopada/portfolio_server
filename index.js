@@ -51,18 +51,10 @@ app.post("/send", (req, res) => {
 	transporter.sendMail(mailOptions, (err, info) => {
 		if (err) {
 			console.log(err);
-			res.render("index", {
-				msg:
-					'<div class="alert alert-danger" role="alert">Contact request email FAILED to send.</div>',
-				layout: false,
-			});
+			res.status(500).send({message: 'something went wrong', errors: [err]})
 		} else {
 			console.log("Message sent: %s", info.messageId);
-			res.render("index", {
-				msg:
-					'<div class="alert alert-success" role="alert">Contact request email SUCCESSFULLY sent.</div>',
-				layout: false,
-			});
+			res.status(200).send('mail sent successfully')
 		}
 	});
 });
