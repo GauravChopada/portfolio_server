@@ -5,7 +5,7 @@ const bodyParser = require("body-parser"); // for parsing HTTP requests and resp
 const path = require("path"); // core JS module for handling file paths
 const nodemailer = require("nodemailer"); // module for handling emails
 const dotenv = require("dotenv"); // set up config for ".env" file
-const cors=require("cors");
+const cors = require("cors");
 dotenv.config();
 
 const app = express(); // declare the application as an "express" web app
@@ -13,10 +13,10 @@ const app = express(); // declare the application as an "express" web app
 // Declare Static public resources directory
 app.use("/public", express.static(path.join(__dirname, "public")));
 
-const corsOptions ={
-	origin:'*', 
-	credentials:true,
-	optionSuccessStatus:200,
+const corsOptions = {
+	origin: '*',
+	credentials: true,
+	optionSuccessStatus: 200,
 }
 app.use(cors(corsOptions))
 
@@ -30,7 +30,11 @@ app.get("/", (req, res) => {
 });
 
 app.post("/send", (req, res) => {
-	console.log(req.body)
+
+	if (req.body.name === undefined || req.body.name === null || req.body.name === '' || req.body.email === undefined || req.body.email === null || req.body.email === '' || req.body.message === undefined || req.body.message === null || req.body.message === '' || req.body.subject === undefined || req.body.subject === null || req.body.subject === '' || /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(req.body.email) === false) {
+		res.status(401).send({ message: 'invalid params', errors: [err] })
+	}
+
 	// CREATE YOUR OWN EMBEDDED HTML TEMPLATE STRING WITH name, school, email, phone, and message CONTACT DETAILS
 	const EMAIL_HTML_BODY = `
     <p><b>Name:</b> ${req.body.name}</p>
@@ -60,7 +64,7 @@ app.post("/send", (req, res) => {
 	transporter.sendMail(mailOptions, (err, info) => {
 		if (err) {
 			console.log(err);
-			res.status(500).send({message: 'something went wrong', errors: [err]})
+			res.status(500).send({ message: 'something went wrong', errors: [err] })
 		} else {
 			console.log("Message sent: %s", info.messageId);
 			res.status(200).send('mail sent successfully')
