@@ -39,7 +39,7 @@ app.post("/send", (req, res) => {
 	const EMAIL_HTML_BODY = `
     <p><b>Name:</b> ${req.body.name}</p>
     <p><b>Email:</b> ${req.body.email}</p>
-    <p><b>Via:</b> GROOT PORTFOLIO</p>
+    <p><b>Via:</b> Via Accuwrap Website</p>
     <p><b>Message:</b> ${req.body.message}</p>`; // create the body of the email with embedded HTML
 
 	// Create reusable transporter object defined with the NodeMailer module
@@ -54,7 +54,7 @@ app.post("/send", (req, res) => {
 	// Setup email data object
 	let mailOptions = {
 		from: `"${req.body.name}" <${process.env.NM_EMAIL_ADDR}>`,
-		to: 'gauravrchopada65@gmail.com',
+		to: 'gauravrchopada65@gmail.com, Bhavyaantala02@gmail.com, accuwrap.packaging@gmail.com, viralprajapati2401@gmail.com',
 		subject: `${req.body.subject}`,
 		html: EMAIL_HTML_BODY,
 
