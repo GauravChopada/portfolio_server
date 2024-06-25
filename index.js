@@ -53,11 +53,10 @@ app.post("/send", (req, res) => {
 
 	// Setup email data object
 	let mailOptions = {
-		from: `"${req.body.name}" <${process.env.NM_EMAIL_ADDR}>`,
+		from: `"Accuwrap Website" <${process.env.NM_EMAIL_ADDR}>`,
 		to: 'gauravrchopada65@gmail.com, Bhavyaantala02@gmail.com, accuwrap.packaging@gmail.com, viralprajapati2401@gmail.com',
 		subject: `${req.body.subject}`,
 		html: EMAIL_HTML_BODY,
-
 	};
 
 	// Send mail with defined transport object
